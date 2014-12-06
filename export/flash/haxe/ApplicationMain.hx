@@ -31,8 +31,28 @@ class ApplicationMain {
 		types.push (AssetType.TEXT);
 		
 		
+		urls.push ("assets/data/Map1.txt");
+		types.push (AssetType.TEXT);
+		
+		
 		urls.push ("assets/images/images-go-here.txt");
 		types.push (AssetType.TEXT);
+		
+		
+		urls.push ("assets/images/kid_base.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/player.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tile_snow.png");
+		types.push (AssetType.IMAGE);
 		
 		
 		urls.push ("assets/music/music-goes-here.txt");
