@@ -35,19 +35,35 @@ class ApplicationMain {
 		types.push (AssetType.TEXT);
 		
 		
-		urls.push ("assets/images/bluehat.ase");
-		types.push (AssetType.BINARY);
-		
-		
-		urls.push ("assets/images/hats.ase");
-		types.push (AssetType.BINARY);
-		
-		
-		urls.push ("assets/images/hats1.png");
+		urls.push ("assets/images/accessories/anarcho.png");
 		types.push (AssetType.IMAGE);
 		
 		
-		urls.push ("assets/images/hats2.png");
+		urls.push ("assets/images/bases/kid_base.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/bases/kid_base1.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/bases/kid_base2.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/bases/kid_base3.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/bases/kid_base4.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/hats/hats1.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/hats/hats2.png");
 		types.push (AssetType.IMAGE);
 		
 		
@@ -55,19 +71,27 @@ class ApplicationMain {
 		types.push (AssetType.TEXT);
 		
 		
-		urls.push ("assets/images/kid_base.png");
+		urls.push ("assets/images/outfits/outfit_blue.png");
 		types.push (AssetType.IMAGE);
 		
 		
-		urls.push ("assets/images/kid_base0.png");
+		urls.push ("assets/images/outfits/outfit_grey.png");
 		types.push (AssetType.IMAGE);
 		
 		
-		urls.push ("assets/images/kid_base1.png");
+		urls.push ("assets/images/outfits/outfit_pink.png");
 		types.push (AssetType.IMAGE);
 		
 		
-		urls.push ("assets/images/player.png");
+		urls.push ("assets/images/outfits/outfit_purple.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/outfits/outfit_red.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/snowball.png");
 		types.push (AssetType.IMAGE);
 		
 		

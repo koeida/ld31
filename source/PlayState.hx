@@ -12,8 +12,13 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.util.FlxRandom;
 import flixel.util.FlxRect;
+import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import openfl.Assets;
+
+using flixel.util.FlxSpriteUtil;
+
+
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -22,6 +27,9 @@ class PlayState extends FlxState
 {
 	public var map:FlxTilemap;
 	private var player:Player;
+	private var enemy:Enemy;
+	private var cursor:FlxSprite;
+	private var target:Target;
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
@@ -41,7 +49,14 @@ class PlayState extends FlxState
 
 		player = new Player(100, 100);
 		add(player);
-		
+
+		enemy = new Enemy(200,100);
+		add(enemy);
+
+		target = new Target(0,0);
+		target.visible = false;
+		add(target);
+
 		super.create();
 	}
 
@@ -63,5 +78,28 @@ class PlayState extends FlxState
 	{
 		super.update();
 		FlxG.collide(player,map);
+		if (FlxG.mouse.justPressedRight) {
+			switch(player.state) {
+				case "standing" | "stand":
+					this.target.scale.x = 1;
+					this.target.scale.y = 1;
+					this.target.visible = true;
+					this.target.alpha = .25;
+					this.target.tweens.push(FlxTween.tween(this.target.scale,{x: .10,y:.10},1.5,{complete: function(_) {
+						this.target.visible = false;
+						this.target.scale.x = 1;
+						this.target.scale.y = 1;
+						}}));
+				case "ducking" | "duck":
+					for (t in this.target.tweens) {
+						t.cancel();
+						t.destroy();
+					}
+					this.target.fadeOut(.15);
+
+					this.target.alpha = .25;
+
+			}
+		}
 	}	
 }
