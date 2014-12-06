@@ -35,11 +35,35 @@ class ApplicationMain {
 		types.push (AssetType.TEXT);
 		
 		
+		urls.push ("assets/images/bluehat.ase");
+		types.push (AssetType.BINARY);
+		
+		
+		urls.push ("assets/images/hats.ase");
+		types.push (AssetType.BINARY);
+		
+		
+		urls.push ("assets/images/hats1.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/hats2.png");
+		types.push (AssetType.IMAGE);
+		
+		
 		urls.push ("assets/images/images-go-here.txt");
 		types.push (AssetType.TEXT);
 		
 		
 		urls.push ("assets/images/kid_base.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/kid_base0.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/kid_base1.png");
 		types.push (AssetType.IMAGE);
 		
 		

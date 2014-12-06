@@ -39,7 +39,7 @@ class PlayState extends FlxState
 
 		add(map);
 
-		player = new Player(32, 32);
+		player = new Player(100, 100);
 		add(player);
 		
 		super.create();

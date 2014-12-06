@@ -7,14 +7,27 @@ import flixel.util.FlxColor;
 class Player extends FlxSprite
 {
 	public var speed = 200.0;
-	private var state = "normal";
+	private var state = "ducking";
     public function new(X:Float=0, Y:Float=0) 
     {
         super(X, Y);
-        loadGraphic(AssetPaths.kid_base__png,false,32,32);
-        setFacingFlip(FlxObject.RIGHT, false, false);
-		setFacingFlip(FlxObject.LEFT, true, false);
-		//animation.add("lr", [3, 4, 3, 5], 6, false);
+        var hat = AssetPaths.hats2__png;
+        var base = AssetPaths.kid_base__png;
+        var hatSprite = new FlxSprite();
+        //var baseSprite = new Sprite();
+        hatSprite.loadGraphic(hat);
+        //baseSprite.loadGraphic(base);
+        //this.pixels.copyPixels(hatSprite.pixels,Rectangle(0,0,baseSprite.pixels.width,baseSprite.pixels.height));
+
+
+        loadGraphic(AssetPaths.kid_base__png,true,32,32);
+        this.pixels.copyPixels(hatSprite.pixels,
+        	new flash.geom.Rectangle(0,0,this.pixels.width,this.pixels.height),new flash.geom.Point(0,0),null,null,true);
+
+		animation.add("duck", [0, 1], 6, false);
+		animation.add("stand", [1,0], 6, false);
+		animation.add("ducking", [1], 6, false);
+		animation.add("standing", [0], 6, false);
 		//animation.add("u", [6, 7, 6, 8], 6, false);
 		//animation.add("d", [0, 1, 0, 2], 6, false);
         drag.x = drag.y = 1600;
@@ -22,51 +35,48 @@ class Player extends FlxSprite
         offset.set(4,2);
     }
     private function movement():Void {
-    	//var _up:Bool = false;
-		//var _down:Bool = false;
-		//var _left:Bool = false;
-		//var _right:Bool = false;
+
 		var up    = FlxG.keys.anyPressed(["UP",    "W"]);
 		var down  = FlxG.keys.anyPressed(["DOWN",  "S"]);
-		var left  = FlxG.keys.anyPressed(["LEFT",  "A"]);
-		var right = FlxG.keys.anyPressed(["RIGHT", "D"]);
+
+		if(FlxG.mouse.justPressedRight) {
+			switch(this.state) {
+				case "standing":
+					this.state = "ducking";
+					animation.play("duck");
+				case "ducking":
+					this.state = "standing";
+					animation.play("stand");
+			}
+			FlxG.mouse.reset();
+		}
 
 		if (up && down)
 	    	up = down = false;
-		if (left && right)
-	    	left = right = false;
 
 	    var vVel = up ? -speed : speed;
-	    var hVel = left ? -speed : speed;
 
 	    if (up) {
 	    	facing = FlxObject.UP;
 	    } else if (down) {
 	    	facing = FlxObject.DOWN;
-	    } else if (left) {
-	    	facing = FlxObject.LEFT;
-	    } else if (right) {
-	    	facing = FlxObject.RIGHT;
-	    }
+	    } 
 
 	    if ( up || down)
 		{
 			velocity.y = vVel;
 		}
 
-		if (left || right) {
-			velocity.x = hVel;
-		}
+		
 
-		switch(facing)
-    	{
-	        case FlxObject.LEFT, FlxObject.RIGHT:
-	            animation.play("lr");
-	        case FlxObject.UP:
-	            animation.play("u");
-	        case FlxObject.DOWN:
-	            animation.play("d");
-    	}
+		switch(state) {
+			case "duck":
+				animation.play("duck");
+			case "ducking":			
+				animation.play("ducking");
+			case "standing":
+				animation.play("standing");
+		}
 
 	}
 	override public function destroy():Void
@@ -79,9 +89,9 @@ class Player extends FlxSprite
 	 */
 	override public function update():Void
 	{
-		if(this.state == "normal") {
-			this.movement();
-		}
+		
+		this.movement();
+		
 		super.update();
 	}	
 }
