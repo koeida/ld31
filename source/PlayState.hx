@@ -8,12 +8,12 @@ import flixel.FlxState;
 import flixel.group.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
+import flixel.tweens.FlxTween;
 import flixel.ui.FlxButton;
+import flixel.util.FlxColor;
 import flixel.util.FlxMath;
 import flixel.util.FlxRandom;
 import flixel.util.FlxRect;
-import flixel.util.FlxColor;
-import flixel.tweens.FlxTween;
 import openfl.Assets;
 
 using flixel.util.FlxSpriteUtil;
@@ -30,6 +30,7 @@ class PlayState extends FlxState
 	private var enemy:Enemy;
 	private var cursor:FlxSprite;
 	private var target:Target;
+
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
@@ -47,10 +48,10 @@ class PlayState extends FlxState
 
 		add(map);
 
-		player = new Player(100, 100);
+		player = new Player(0, 100);
 		add(player);
 
-		enemy = new Enemy(200,100);
+		enemy = new Enemy(300,100);
 		add(enemy);
 
 		target = new Target(0,0);
@@ -98,7 +99,16 @@ class PlayState extends FlxState
 					this.target.fadeOut(.15);
 
 					this.target.alpha = .25;
+			}
+		}
 
+		if (FlxG.mouse.justPressed) {
+			switch(player.state) {
+				case "throwing":
+					var snowBall = new Snowball(this.player.x,this.player.y,
+												this.target.x,this.target.y);
+					add(snowBall);
+					add(snowBall.emitter);
 			}
 		}
 	}	

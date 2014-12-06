@@ -10,7 +10,7 @@ class Player extends FlxSprite
 {
 	public var speed = 200.0;
 	public var state = "ducking";
-	private var cursor:FlxSprite;
+
     public function new(X:Float=0, Y:Float=0) 
     {
         super(X, Y);
@@ -50,8 +50,8 @@ class Player extends FlxSprite
 		if(FlxG.mouse.justPressed) {
 			switch(this.state) {
 				case "standing":
-					this.state="throwing";
-					animation.play("throw");					
+					this.state = "throwing";
+					animation.play("throw");				
 			}
 		}
 
