@@ -1,8 +1,10 @@
 package ;
 
+import flash.filters.GlowFilter; 
+import flixel.effects.FlxSpriteFilter;
 import flixel.effects.particles.FlxEmitter; 
 import flixel.effects.particles.FlxParticle;
-import flash.filters.GlowFilter; 
+import flixel.addons.effects.FlxTrail;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -17,6 +19,7 @@ class Snowball extends FlxSprite {
 	public var speed = 200.0;
 	public var emitter:FlxEmitter;
 	private var whitePixel:FlxParticle;
+	public var trail:FlxTrail;
 
     public function new(X:Float=0, Y:Float=0,targetX:Float,targetY:Float,snowballType:SnowballType,missRadius,missOffset) {
         super(X, Y);
@@ -26,7 +29,7 @@ class Snowball extends FlxSprite {
         this.scale.x = .5;
         this.scale.y = .5;
         this.animation.add("spin", [for (x in 0...5) x], 30, true);
-        var filter2 = new GlowFilter(0xFF0000, 1, 50, 50, 1.5, 1);
+        trail = new FlxTrail(this,null,15,0);
 
         var missAmountX = FlxRandom.intRanged(-missRadius,missRadius);
         var missAmountY = (snowballType == Fast) ? FlxRandom.intRanged(-missRadius,missRadius) : 0;
@@ -37,7 +40,7 @@ class Snowball extends FlxSprite {
         	case Slow:
         		FlxG.sound.play(AssetPaths.throwhigh__mp3);
         		FlxTween.quadMotion(this,X,Y,
-					Std.int(X + 50), Std.int(targetY - 100),
+					Std.int(X + 100), Std.int(targetY - 150),
 					targX, targY,
 					1,true,{complete: function(_) {this.destroy();}});
         	case Fast:
@@ -82,6 +85,7 @@ class Snowball extends FlxSprite {
 		animation.play("spin");
 		emitter.x = this.x;
 		emitter.y = this.y;
+		trail.update();
 		super.update();
 	}	
 }

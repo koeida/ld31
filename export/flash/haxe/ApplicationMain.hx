@@ -39,6 +39,30 @@ class ApplicationMain {
 		types.push (AssetType.IMAGE);
 		
 		
+		urls.push ("assets/images/accessories/flagpole.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/accessories/flag_american.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/accessories/flag_anarchist.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/accessories/flag_communist.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/accessories/flag_isis..png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/accessories/flag_isis.png");
+		types.push (AssetType.IMAGE);
+		
+		
 		urls.push ("assets/images/bases/kid_base.png");
 		types.push (AssetType.IMAGE);
 		
@@ -139,10 +163,6 @@ class ApplicationMain {
 		types.push (AssetType.IMAGE);
 		
 		
-		urls.push ("assets/images/tiles2.png");
-		types.push (AssetType.IMAGE);
-		
-		
 		urls.push ("assets/images/tiles3.png");
 		types.push (AssetType.IMAGE);
 		
@@ -164,6 +184,10 @@ class ApplicationMain {
 		
 		
 		urls.push ("assets/images/tiles8.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles_old.png");
 		types.push (AssetType.IMAGE);
 		
 		

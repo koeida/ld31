@@ -50,6 +50,18 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/data/Map1.txt", AssetType.TEXT);
 		className.set ("assets/images/accessories/anarcho.png", __ASSET__assets_images_accessories_anarcho_png);
 		type.set ("assets/images/accessories/anarcho.png", AssetType.IMAGE);
+		className.set ("assets/images/accessories/flagpole.png", __ASSET__assets_images_accessories_flagpole_png);
+		type.set ("assets/images/accessories/flagpole.png", AssetType.IMAGE);
+		className.set ("assets/images/accessories/flag_american.png", __ASSET__assets_images_accessories_flag_american_png);
+		type.set ("assets/images/accessories/flag_american.png", AssetType.IMAGE);
+		className.set ("assets/images/accessories/flag_anarchist.png", __ASSET__assets_images_accessories_flag_anarchist_png);
+		type.set ("assets/images/accessories/flag_anarchist.png", AssetType.IMAGE);
+		className.set ("assets/images/accessories/flag_communist.png", __ASSET__assets_images_accessories_flag_communist_png);
+		type.set ("assets/images/accessories/flag_communist.png", AssetType.IMAGE);
+		className.set ("assets/images/accessories/flag_isis..png", __ASSET__assets_images_accessories_flag_isis__png);
+		type.set ("assets/images/accessories/flag_isis..png", AssetType.IMAGE);
+		className.set ("assets/images/accessories/flag_isis.png", __ASSET__assets_images_accessories_flag_isis_png);
+		type.set ("assets/images/accessories/flag_isis.png", AssetType.IMAGE);
 		className.set ("assets/images/bases/kid_base.png", __ASSET__assets_images_bases_kid_base_png);
 		type.set ("assets/images/bases/kid_base.png", AssetType.IMAGE);
 		className.set ("assets/images/block.png", __ASSET__assets_images_block_png);
@@ -100,8 +112,6 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/tiles13.png", AssetType.IMAGE);
 		className.set ("assets/images/tiles14.png", __ASSET__assets_images_tiles14_png);
 		type.set ("assets/images/tiles14.png", AssetType.IMAGE);
-		className.set ("assets/images/tiles2.png", __ASSET__assets_images_tiles2_png);
-		type.set ("assets/images/tiles2.png", AssetType.IMAGE);
 		className.set ("assets/images/tiles3.png", __ASSET__assets_images_tiles3_png);
 		type.set ("assets/images/tiles3.png", AssetType.IMAGE);
 		className.set ("assets/images/tiles4.png", __ASSET__assets_images_tiles4_png);
@@ -114,6 +124,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/images/tiles7.png", AssetType.IMAGE);
 		className.set ("assets/images/tiles8.png", __ASSET__assets_images_tiles8_png);
 		type.set ("assets/images/tiles8.png", AssetType.IMAGE);
+		className.set ("assets/images/tiles_old.png", __ASSET__assets_images_tiles_old_png);
+		type.set ("assets/images/tiles_old.png", AssetType.IMAGE);
 		className.set ("assets/images/tile_snow.png", __ASSET__assets_images_tile_snow_png);
 		type.set ("assets/images/tile_snow.png", AssetType.IMAGE);
 		className.set ("assets/music/music-goes-here.txt", __ASSET__assets_music_music_goes_here_txt);
@@ -152,6 +164,30 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		type.set (id, AssetType.TEXT);
 		id = "assets/images/accessories/anarcho.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/accessories/flagpole.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/accessories/flag_american.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/accessories/flag_anarchist.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/accessories/flag_communist.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/accessories/flag_isis..png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/accessories/flag_isis.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
@@ -255,10 +291,6 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
-		id = "assets/images/tiles2.png";
-		path.set (id, id);
-		
-		type.set (id, AssetType.IMAGE);
 		id = "assets/images/tiles3.png";
 		path.set (id, id);
 		
@@ -280,6 +312,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		type.set (id, AssetType.IMAGE);
 		id = "assets/images/tiles8.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/images/tiles_old.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
@@ -385,6 +421,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
+		
+		
+		
+		
 		#end
 		
 		#if (windows || mac || linux)
@@ -399,6 +441,24 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("assets/images/accessories/anarcho.png", __ASSET__assets_images_accessories_anarcho_png);
 		type.set ("assets/images/accessories/anarcho.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/accessories/flagpole.png", __ASSET__assets_images_accessories_flagpole_png);
+		type.set ("assets/images/accessories/flagpole.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/accessories/flag_american.png", __ASSET__assets_images_accessories_flag_american_png);
+		type.set ("assets/images/accessories/flag_american.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/accessories/flag_anarchist.png", __ASSET__assets_images_accessories_flag_anarchist_png);
+		type.set ("assets/images/accessories/flag_anarchist.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/accessories/flag_communist.png", __ASSET__assets_images_accessories_flag_communist_png);
+		type.set ("assets/images/accessories/flag_communist.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/accessories/flag_isis..png", __ASSET__assets_images_accessories_flag_isis__png);
+		type.set ("assets/images/accessories/flag_isis..png", AssetType.IMAGE);
+		
+		className.set ("assets/images/accessories/flag_isis.png", __ASSET__assets_images_accessories_flag_isis_png);
+		type.set ("assets/images/accessories/flag_isis.png", AssetType.IMAGE);
 		
 		className.set ("assets/images/bases/kid_base.png", __ASSET__assets_images_bases_kid_base_png);
 		type.set ("assets/images/bases/kid_base.png", AssetType.IMAGE);
@@ -475,9 +535,6 @@ class DefaultAssetLibrary extends AssetLibrary {
 		className.set ("assets/images/tiles14.png", __ASSET__assets_images_tiles14_png);
 		type.set ("assets/images/tiles14.png", AssetType.IMAGE);
 		
-		className.set ("assets/images/tiles2.png", __ASSET__assets_images_tiles2_png);
-		type.set ("assets/images/tiles2.png", AssetType.IMAGE);
-		
 		className.set ("assets/images/tiles3.png", __ASSET__assets_images_tiles3_png);
 		type.set ("assets/images/tiles3.png", AssetType.IMAGE);
 		
@@ -495,6 +552,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("assets/images/tiles8.png", __ASSET__assets_images_tiles8_png);
 		type.set ("assets/images/tiles8.png", AssetType.IMAGE);
+		
+		className.set ("assets/images/tiles_old.png", __ASSET__assets_images_tiles_old_png);
+		type.set ("assets/images/tiles_old.png", AssetType.IMAGE);
 		
 		className.set ("assets/images/tile_snow.png", __ASSET__assets_images_tile_snow_png);
 		type.set ("assets/images/tile_snow.png", AssetType.IMAGE);
@@ -1106,6 +1166,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_data_data_goes_here_txt extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__assets_data_map1_txt extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__assets_images_accessories_anarcho_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_accessories_flagpole_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_accessories_flag_american_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_accessories_flag_anarchist_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_accessories_flag_communist_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_accessories_flag_isis__png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_accessories_flag_isis_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_bases_kid_base_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_block_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_hats_hats1_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -1131,13 +1197,13 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_images_tiles12_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_tiles13_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_tiles14_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep @:bind #if display private #end class __ASSET__assets_images_tiles2_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_tiles3_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_tiles4_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_tiles5_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_tiles6_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_tiles7_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_tiles8_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_images_tiles_old_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_images_tile_snow_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_music_music_goes_here_txt extends flash.utils.ByteArray { }
 @:keep @:bind #if display private #end class __ASSET__assets_sounds_block_mp3 extends flash.media.Sound { }
@@ -1203,6 +1269,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
+
+
+
+
+
 #end
 
 #else
@@ -1217,6 +1289,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 //@:file("assets/data/data-goes-here.txt") class __ASSET__assets_data_data_goes_here_txt extends lime.utils.ByteArray {}
 //@:file("assets/data/Map1.txt") class __ASSET__assets_data_map1_txt extends lime.utils.ByteArray {}
 //@:bitmap("assets/images/accessories/anarcho.png") class __ASSET__assets_images_accessories_anarcho_png extends openfl.display.BitmapData {}
+//@:bitmap("assets/images/accessories/flagpole.png") class __ASSET__assets_images_accessories_flagpole_png extends openfl.display.BitmapData {}
+//@:bitmap("assets/images/accessories/flag_american.png") class __ASSET__assets_images_accessories_flag_american_png extends openfl.display.BitmapData {}
+//@:bitmap("assets/images/accessories/flag_anarchist.png") class __ASSET__assets_images_accessories_flag_anarchist_png extends openfl.display.BitmapData {}
+//@:bitmap("assets/images/accessories/flag_communist.png") class __ASSET__assets_images_accessories_flag_communist_png extends openfl.display.BitmapData {}
+//@:bitmap("assets/images/accessories/flag_isis..png") class __ASSET__assets_images_accessories_flag_isis__png extends openfl.display.BitmapData {}
+//@:bitmap("assets/images/accessories/flag_isis.png") class __ASSET__assets_images_accessories_flag_isis_png extends openfl.display.BitmapData {}
 //@:bitmap("assets/images/bases/kid_base.png") class __ASSET__assets_images_bases_kid_base_png extends openfl.display.BitmapData {}
 //@:bitmap("assets/images/block.png") class __ASSET__assets_images_block_png extends openfl.display.BitmapData {}
 //@:bitmap("assets/images/hats/hats1.png") class __ASSET__assets_images_hats_hats1_png extends openfl.display.BitmapData {}
@@ -1242,13 +1320,13 @@ class DefaultAssetLibrary extends AssetLibrary {
 //@:bitmap("assets/images/tiles12.png") class __ASSET__assets_images_tiles12_png extends openfl.display.BitmapData {}
 //@:bitmap("assets/images/tiles13.png") class __ASSET__assets_images_tiles13_png extends openfl.display.BitmapData {}
 //@:bitmap("assets/images/tiles14.png") class __ASSET__assets_images_tiles14_png extends openfl.display.BitmapData {}
-//@:bitmap("assets/images/tiles2.png") class __ASSET__assets_images_tiles2_png extends openfl.display.BitmapData {}
 //@:bitmap("assets/images/tiles3.png") class __ASSET__assets_images_tiles3_png extends openfl.display.BitmapData {}
 //@:bitmap("assets/images/tiles4.png") class __ASSET__assets_images_tiles4_png extends openfl.display.BitmapData {}
 //@:bitmap("assets/images/tiles5.png") class __ASSET__assets_images_tiles5_png extends openfl.display.BitmapData {}
 //@:bitmap("assets/images/tiles6.png") class __ASSET__assets_images_tiles6_png extends openfl.display.BitmapData {}
 //@:bitmap("assets/images/tiles7.png") class __ASSET__assets_images_tiles7_png extends openfl.display.BitmapData {}
 //@:bitmap("assets/images/tiles8.png") class __ASSET__assets_images_tiles8_png extends openfl.display.BitmapData {}
+//@:bitmap("assets/images/tiles_old.png") class __ASSET__assets_images_tiles_old_png extends openfl.display.BitmapData {}
 //@:bitmap("assets/images/tile_snow.png") class __ASSET__assets_images_tile_snow_png extends openfl.display.BitmapData {}
 //@:file("assets/music/music-goes-here.txt") class __ASSET__assets_music_music_goes_here_txt extends lime.utils.ByteArray {}
 //@:sound("assets/sounds/block.mp3") class __ASSET__assets_sounds_block_mp3 extends openfl.media.Sound {}

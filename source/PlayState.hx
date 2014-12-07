@@ -45,6 +45,8 @@ class PlayState extends FlxState
 
 	public var currentWave:Int;
 	public var remainingWaves:Int;
+	public var flag:FlxSprite;
+	public var flagPole:FlxSprite;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -86,6 +88,7 @@ class PlayState extends FlxState
 			friendly = new Kid(15 + Std.random(15),x * 40,false,enemies,snowballs);			
 			friendly.brain = friendly.attack;
 			friendly.randomThrowDelay = true;
+			friendly.ableToRecover = true;
 			friendlies.add(friendly);
 		}
 
@@ -113,8 +116,8 @@ class PlayState extends FlxState
 
 	public function makeWaveHappen() {
 		var waves:Array<Wave> = 
-			[{numEnemies:6,setup:function(k:Kid) {k.brain = k.spawn;},numWaves:3,waveDelay:8},
-			 {numEnemies:6,setup:function(k:Kid) {k.brain = k.charge;},numWaves:3,waveDelay:14}];
+			[{numEnemies:6,setup:function(k:Kid) {k.brain = k.charge;k.isFlagKid = Std.random(4) == 3 ? true : false;k.flagName="anarchist";},numWaves:3,waveDelay:14},
+			 {numEnemies:6,setup:function(k:Kid) {k.brain = k.spawn;},numWaves:3,waveDelay:8}];
 		var wave = waves[this.currentWave];
 		
 		switch(this.remainingWaves) {
@@ -129,6 +132,20 @@ class PlayState extends FlxState
 		for (i in 0...wave.numEnemies) {
 			enemy = new Kid(255 + Std.random(15),Std.random(200),true,friendlies,enemySnowballs);
 			wave.setup(enemy);
+			if(enemy.isFlagKid) {
+				enemy.flag = new FlxSprite();
+				enemy.flagpole = new FlxSprite();
+
+				var flagAsset = Misc.assetsWithName(enemy.flagName)[0];
+				enemy.flag.loadGraphic(flagAsset,true,64,64,false);
+				enemy.flagpole.loadGraphic(AssetPaths.flagpole__png,true,64,64,false);
+				enemy.flagpole.setFacingFlip(FlxObject.LEFT, true, false);
+				enemy.flag.setFacingFlip(FlxObject.LEFT, true, false);
+				enemy.flagpole.facing = FlxObject.LEFT;				
+				enemy.flag.facing = FlxObject.LEFT;
+				add(enemy.flag);
+				add(enemy.flagpole);
+			}
 			enemy.randomThrowDelay = true;
 			enemies.add(enemy);
 		}
@@ -164,8 +181,16 @@ class PlayState extends FlxState
 
 	public function enemyTouch(friend:Kid,enemy:Kid) {
 		if(friend.state != "dead") {
+			friend.state = "dead";
 			FlxG.sound.play(AssetPaths.snowHit__mp3);
 			killKid(friend);
+			if(friend.ableToRecover) {
+				new FlxTimer(30,function(_) { 
+					friend.animation.play("duck");
+					friend.state = "ducking";
+
+				});
+			}
 		}
 	}
 
@@ -174,7 +199,13 @@ class PlayState extends FlxState
 		var deathChoice = deathChoices[Std.random(deathChoices.length)];
 		var dieFunc = function(_) { kid.state = "dead";kid.animation.play("standing");kid.velocity.x = 0; kid.velocity.y = 0;}
 		kid.animation.play("standing");
-		deathChoice(kid,dieFunc);	
+		deathChoice(kid,dieFunc);
+		if(kid.ableToRecover) {
+			new FlxTimer(30,function(_) { 
+				kid.animation.play("duck");
+				kid.state = "ducking";
+			});
+		}
 	}
 
 	public function enemyHit(enemy:Kid,snowball:Snowball) {	
@@ -232,14 +263,13 @@ class PlayState extends FlxState
 					var snowBall = new Snowball(this.player.x,this.player.y,
 												this.target.x,this.target.y,
 												snowballType,accuracyMod,100);
-					snowballs.add(snowBall);
-					emitters.add(snowBall.emitter);	
+					snowballs.add(snowBall);						
 				case "aimstart":
 					player.state = "aiming";
 					this.target.scale.x = 1;
 					this.target.scale.y = 1;
-					this.target.visible = true;
 					this.target.alpha = .25;
+					this.target.visible = true;					
 					this.target.tweens.push(FlxTween.tween(this.target.scale,{x: .01,y:.01},1,{complete: function(_) {
 						this.target.visible = false;
 						this.target.scale.x = 1;

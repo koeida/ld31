@@ -10,6 +10,7 @@ using flixel.util.FlxSpriteUtil;
 class Player extends Kid
 {
 	public var blockSprite:FlxSprite;
+	public var blockSpriteTween:FlxTween;
     public function new(X:Float=0, Y:Float=0,enemies,snowballs) 
     {
         super(X, Y,false,enemies,snowballs,false);
@@ -17,6 +18,8 @@ class Player extends Kid
         blockSprite = new FlxSprite();
         blockSprite.loadGraphic(AssetPaths.block__png,true,32,32,false);
         blockSprite.visible = false;
+        blockSprite.alpha = .5;
+
 
     }
     private function movement():Void {
@@ -25,19 +28,26 @@ class Player extends Kid
 		var down  = FlxG.keys.anyPressed(["DOWN",  "S"]);
 		var block = FlxG.keys.anyPressed(["SPACE"]);
 
-		if(block && this.blockMode == false) {
-			blockMode = true;		
-
+		if(block && this.blockMode == false) {			
+			if (blockSpriteTween != null) {
+				blockSpriteTween.cancel();
+			}
+			//blockSprite = new FlxSprite();
+        	//blockSprite.loadGraphic(AssetPaths.block__png,true,32,32,false);
+			blockMode = true;
+			this.blockSprite.scale.x = 1;
+			this.blockSprite.scale.y = 1;
 			this.blockSprite.x = this.x;
 			this.blockSprite.y = this.y;
 			this.blockSprite.visible = true;
-			FlxTween.tween(this.blockSprite.scale,{x:5,y:5},.45);
-			this.blockSprite.fadeOut(.45);			
-			new FlxTimer(.45,function(_) { 
-				trace("blockmode ready");
+			blockSpriteTween = FlxTween.tween(this.blockSprite.scale,{x:2,y:2},.35);
+		
+			new FlxTimer(.35,function(_) { 
 				this.blockMode = false;
 				this.blockSprite.visible = false;
-				this.blockSprite.alpha = 1;
+				this.blockSprite.x = this.x;
+				this.blockSprite.y = this.y;
+				this.blockSprite.alpha = .5;
 				this.blockSprite.scale.x = 1;
 				this.blockSprite.scale.y = 1;
 			});
@@ -60,7 +70,7 @@ class Player extends Kid
 
 		if(FlxG.mouse.justPressed) {
 			switch(this.state) {
-				case "standing":
+				case "standing" | "ducking" | "duck" | "stand":
 					this.state = "aimstart";			
 			}
 		}

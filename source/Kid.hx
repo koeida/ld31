@@ -26,6 +26,11 @@ class Kid extends FlxSprite
     public var startY:Float;
     public var startX:Float;
     public var blockMode:Bool;
+    public var ableToRecover:Bool = false;
+    public var isFlagKid:Bool = false;
+    public var flagName:String;
+    public var flag:FlxSprite;
+    public var flagpole:FlxSprite;
 
     public function new(X:Float=0, Y:Float=0,faceLeft = false,enemies,snowballs,throwDelay = true) 
     {
@@ -39,6 +44,7 @@ class Kid extends FlxSprite
         animation.add("ducking", [1], 6, false);
         animation.add("standing", [0], 6, false);
         animation.add("throw",[2,3,4,5,6,7],40,false);
+        animation.add("flag",[9,8],6,true);
         animation.play("ducking");
         this.state = "ducking";
 
@@ -72,6 +78,12 @@ class Kid extends FlxSprite
 
     override public function update():Void {
         super.update();
+        if(this.isFlagKid) {
+            this.flagpole.x = this.x - 5;
+            this.flagpole.y = this.y - 40;
+            this.flag.x = this.flagpole.x;
+            this.flag.y = this.flagpole.y;
+        }
         if(this.brain != null && this.state != "dead") {
             this.brain();
         }
@@ -99,6 +111,7 @@ class Kid extends FlxSprite
     }
 
     public function charge() {
+        var chargeAnim = this.isFlagKid ? "flag" : "running";
         if(this.canThrow) {
             var targets = this.enemies.members.filter(function(e) {return e.state != "dead";});
             
@@ -112,14 +125,14 @@ class Kid extends FlxSprite
                     new FlxTimer(2,function(_) {
                         if(this.state == "dead") { return;}
                         this.state = "running";
-                        animation.play("running");});
+                        animation.play(chargeAnim);});
                     this.state = "throwing";
                 }
                 
             }
         } else {
             this.state = "running";
-            animation.play("running");
+            animation.play(chargeAnim);
             if(movementTarget == null || movementTarget.state == "dead") {
                 var targets = this.enemies.members.filter(function(e) {return e.state != "dead";});            
                 this.movementTarget = Misc.randomFrom(targets);            
