@@ -25,11 +25,12 @@ class Kid extends FlxSprite
 
     public var startY:Float;
     public var startX:Float;
+    public var blockMode:Bool;
 
     public function new(X:Float=0, Y:Float=0,faceLeft = false,enemies,snowballs,throwDelay = true) 
     {
         super(X, Y);
-        
+        this.blockMode = false;
         Misc.generateSprite(this,faceLeft);
 
         animation.add("duck", [0, 1], 6, false);
@@ -44,15 +45,15 @@ class Kid extends FlxSprite
         this.startY = Y;
         this.startX = X;
         drag.x = drag.y = 10;
-        setSize(15,32);
-        offset.set(10,0);
+        setSize(20,28);
+        offset.set(6,4);
         this.enemies = enemies;
         this.snowballs = snowballs;
         this.brain = null;
         this.randomThrowDelay = throwDelay;
         this.canThrow = !randomThrowDelay;
         if(randomThrowDelay) {
-            var throwDelay = this.randomThrowDelay ? 1 + Std.random(3) : 1;
+            var throwDelay = this.randomThrowDelay ? 1 + Std.random(2) : 1;
             new FlxTimer(throwDelay,function(_) { this.canThrow = true;});
         }
     }
@@ -123,7 +124,7 @@ class Kid extends FlxSprite
                 var targets = this.enemies.members.filter(function(e) {return e.state != "dead";});            
                 this.movementTarget = Misc.randomFrom(targets);            
             }    
-            FlxVelocity.moveTowardsObject(this,this.movementTarget,50);    
+            FlxVelocity.moveTowardsObject(this,this.movementTarget,60);    
         }
     }
 
@@ -141,7 +142,7 @@ class Kid extends FlxSprite
                 var targets = this.enemies.members.filter(function(e) {return e.state != "dead";});            
                 this.movementTarget = Misc.randomFrom(targets);            
             }    
-            FlxVelocity.moveTowardsPoint(this,FlxPoint.weak(this.startX - 50,this.startY),50);   
+            FlxVelocity.moveTowardsPoint(this,FlxPoint.weak(this.startX - 50,this.startY),80);   
         }
     }
 

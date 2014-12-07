@@ -78,6 +78,8 @@ class PlayState extends FlxState
 		emitters = new FlxTypedGroup<FlxEmitter>();
 		add(emitters);
 
+
+
 		makeWaveHappen();
 
 		for (x in 1...5) {
@@ -91,6 +93,7 @@ class PlayState extends FlxState
 		player.brain = null;
 		friendlies.add(player);
 		canThrow = true;
+		add(player.blockSprite);
 
 		target = new Target(0,0);
 		target.visible = false;
@@ -110,8 +113,8 @@ class PlayState extends FlxState
 
 	public function makeWaveHappen() {
 		var waves:Array<Wave> = 
-			[{numEnemies:5,setup:function(k:Kid) {k.brain = k.spawn;},numWaves:3,waveDelay:8},
-			 {numEnemies:5,setup:function(k:Kid) {k.brain = k.charge;},numWaves:3,waveDelay:14}];
+			[{numEnemies:6,setup:function(k:Kid) {k.brain = k.spawn;},numWaves:3,waveDelay:8},
+			 {numEnemies:6,setup:function(k:Kid) {k.brain = k.charge;},numWaves:3,waveDelay:14}];
 		var wave = waves[this.currentWave];
 		
 		switch(this.remainingWaves) {
@@ -124,7 +127,7 @@ class PlayState extends FlxState
 		}
 
 		for (i in 0...wave.numEnemies) {
-			enemy = new Kid(255 + Std.random(15),i * 40,true,friendlies,enemySnowballs);
+			enemy = new Kid(255 + Std.random(15),Std.random(200),true,friendlies,enemySnowballs);
 			wave.setup(enemy);
 			enemy.randomThrowDelay = true;
 			enemies.add(enemy);
@@ -136,9 +139,11 @@ class PlayState extends FlxState
 
 	public function animFallBack(sprite:FlxSprite,callback = null) {
 		var xMod = (sprite.facing == FlxObject.RIGHT) ? -1 : 1;
-		var bounceDistance = Std.random(32) * xMod;
-		FlxTween.tween(sprite,{x:sprite.x + bounceDistance},.05);
-		FlxTween.angle(sprite,0,90 * xMod,.07,{ease:FlxEase.bounceOut,complete:callback});
+		var sxy = sprite.getScreenXY();
+		var maxDistance = Std.int(xMod == -1 ? sxy.x : 300 - sxy.x);
+		var bounceDistance = Std.random(maxDistance) * xMod;
+		FlxTween.tween(sprite,{y:sxy.y - Std.random(30),x:sxy.x + bounceDistance},.15);
+		FlxTween.angle(sprite,0,90 * xMod,.12,{ease:FlxEase.bounceOut,complete:callback});
 	}
 
 	public function animBounce(sprite:FlxSprite,callback = null) {
@@ -157,19 +162,36 @@ class PlayState extends FlxState
 		FlxTween.angle(sprite,0,-90 * xMod,.5,{ease:FlxEase.elasticIn,complete:callback});
 	}
 
-	public function enemyHit(enemy:Kid,snowball:Snowball) {		
+	public function enemyTouch(friend:Kid,enemy:Kid) {
+		if(friend.state != "dead") {
+			FlxG.sound.play(AssetPaths.snowHit__mp3);
+			killKid(friend);
+		}
+	}
+
+	public function killKid(kid:Kid) {
+		var deathChoices = [animFallBack];
+		var deathChoice = deathChoices[Std.random(deathChoices.length)];
+		var dieFunc = function(_) { kid.state = "dead";kid.animation.play("standing");kid.velocity.x = 0; kid.velocity.y = 0;}
+		kid.animation.play("standing");
+		deathChoice(kid,dieFunc);	
+	}
+
+	public function enemyHit(enemy:Kid,snowball:Snowball) {	
+
+		if (enemy.blockMode) {
+			FlxG.sound.play(AssetPaths.block__mp3);
+			snowball.destroy();
+			return;
+		}	
 		
-		if(enemy.state == "duck" || enemy.state == "ducking" || enemy.state == "dead") {
+		if(enemy.state == "dead") {
 			return;
 		} 
 		snowball.destroy();
 		FlxG.sound.play(AssetPaths.snowHit__mp3);
 		if (enemy.state != "dead") {
-			var deathChoices = [animFallBack];
-			var deathChoice = deathChoices[Std.random(deathChoices.length)];
-			var dieFunc = function(_) { enemy.state = "dead";enemy.animation.play("standing");enemy.velocity.x = 0; enemy.velocity.y = 0;}
-			enemy.animation.play("standing");
-			deathChoice(enemy,dieFunc);					
+			killKid(enemy);			
 		} else {
 			animBounce(enemy);
 		}
@@ -184,6 +206,7 @@ class PlayState extends FlxState
 
 		FlxG.overlap(this.enemies, this.snowballs, enemyHit);
 		FlxG.overlap(this.friendlies, this.enemySnowballs, enemyHit);
+		FlxG.overlap(this.friendlies, this.enemies, enemyTouch);
 
 		if (FlxG.mouse.justPressedRight) {
 			switch(player.state) {				
@@ -221,6 +244,7 @@ class PlayState extends FlxState
 						this.target.visible = false;
 						this.target.scale.x = 1;
 						this.target.scale.y = 1;
+						if(player.state == "aiming") { player.state = "standing";}
 						}}));
 
 			}

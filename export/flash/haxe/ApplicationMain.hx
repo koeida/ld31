@@ -43,6 +43,10 @@ class ApplicationMain {
 		types.push (AssetType.IMAGE);
 		
 		
+		urls.push ("assets/images/block.png");
+		types.push (AssetType.IMAGE);
+		
+		
 		urls.push ("assets/images/hats/hats1.png");
 		types.push (AssetType.IMAGE);
 		
@@ -171,7 +175,15 @@ class ApplicationMain {
 		types.push (AssetType.TEXT);
 		
 		
+		urls.push ("assets/sounds/block.mp3");
+		types.push (AssetType.MUSIC);
+		
+		
 		urls.push ("assets/sounds/lasthit.mp3");
+		types.push (AssetType.MUSIC);
+		
+		
+		urls.push ("assets/sounds/punch.mp3");
 		types.push (AssetType.MUSIC);
 		
 		

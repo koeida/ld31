@@ -2,20 +2,46 @@ package ;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
-import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
 using flixel.util.FlxSpriteUtil;
 
 class Player extends Kid
 {
+	public var blockSprite:FlxSprite;
     public function new(X:Float=0, Y:Float=0,enemies,snowballs) 
     {
         super(X, Y,false,enemies,snowballs,false);
+        blockMode = false;
+        blockSprite = new FlxSprite();
+        blockSprite.loadGraphic(AssetPaths.block__png,true,32,32,false);
+        blockSprite.visible = false;
+
     }
     private function movement():Void {
 
 		var up    = FlxG.keys.anyPressed(["UP",    "W"]);
 		var down  = FlxG.keys.anyPressed(["DOWN",  "S"]);
+		var block = FlxG.keys.anyPressed(["SPACE"]);
+
+		if(block && this.blockMode == false) {
+			blockMode = true;		
+
+			this.blockSprite.x = this.x;
+			this.blockSprite.y = this.y;
+			this.blockSprite.visible = true;
+			FlxTween.tween(this.blockSprite.scale,{x:5,y:5},.45);
+			this.blockSprite.fadeOut(.45);			
+			new FlxTimer(.45,function(_) { 
+				trace("blockmode ready");
+				this.blockMode = false;
+				this.blockSprite.visible = false;
+				this.blockSprite.alpha = 1;
+				this.blockSprite.scale.x = 1;
+				this.blockSprite.scale.y = 1;
+			});
+		}
 
 		if(this.state == "throwing" && animation.finished) {
 			this.state = "standing";

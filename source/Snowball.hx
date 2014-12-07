@@ -1,7 +1,8 @@
 package ;
 
 import flixel.effects.particles.FlxEmitter; 
-import flixel.effects.particles.FlxParticle; 
+import flixel.effects.particles.FlxParticle;
+import flash.filters.GlowFilter; 
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -25,6 +26,7 @@ class Snowball extends FlxSprite {
         this.scale.x = .5;
         this.scale.y = .5;
         this.animation.add("spin", [for (x in 0...5) x], 30, true);
+        var filter2 = new GlowFilter(0xFF0000, 1, 50, 50, 1.5, 1);
 
         var missAmountX = FlxRandom.intRanged(-missRadius,missRadius);
         var missAmountY = (snowballType == Fast) ? FlxRandom.intRanged(-missRadius,missRadius) : 0;
@@ -35,12 +37,12 @@ class Snowball extends FlxSprite {
         	case Slow:
         		FlxG.sound.play(AssetPaths.throwhigh__mp3);
         		FlxTween.quadMotion(this,X,Y,
-					Std.int((X + targetX - 100) / 2), targetY - 200,
+					Std.int(X + 50), Std.int(targetY - 100),
 					targX, targY,
 					1,true,{complete: function(_) {this.destroy();}});
         	case Fast:
         		FlxG.sound.play(AssetPaths.throw__mp3);
-        		FlxTween.tween(this, {x:targX,y:targY},.25,
+        		FlxTween.tween(this, {x:targX,y:targY},.35,
         			{complete: function(_) {this.destroy();}});
         }
         
@@ -65,7 +67,7 @@ class Snowball extends FlxSprite {
 			whitePixel.lifespan = .1;
 			emitter.add(whitePixel);
 		}
-		emitter.start(false, 2, .05);
+		//emitter.start(false, 2, .05);
     }
 
     override public function destroy():Void {
