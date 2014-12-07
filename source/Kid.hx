@@ -3,8 +3,10 @@ import openfl.Assets;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
-import flixel.util.FlxTimer;
 import flixel.group.FlxTypedGroup;
+import flixel.util.FlxPoint;
+import flixel.util.FlxTimer;
+import flixel.util.FlxVelocity;
 
 using Lambda;
 using Misc;
@@ -19,6 +21,10 @@ class Kid extends FlxSprite
     public var snowballs:FlxTypedGroup<Snowball>;
     public var canThrow:Bool;
     public var randomThrowDelay = true;
+    public var movementTarget:Kid;
+
+    public var startY:Float;
+    public var startX:Float;
 
     public function new(X:Float=0, Y:Float=0,faceLeft = false,enemies,snowballs,throwDelay = true) 
     {
@@ -28,13 +34,15 @@ class Kid extends FlxSprite
 
         animation.add("duck", [0, 1], 6, false);
         animation.add("stand", [1,0], 6, false);
-        animation.add("running", [8,0], 15, true);
+        animation.add("running", [8,0], 6, true);
         animation.add("ducking", [1], 6, false);
         animation.add("standing", [0], 6, false);
         animation.add("throw",[2,3,4,5,6,7],40,false);
         animation.play("ducking");
         this.state = "ducking";
 
+        this.startY = Y;
+        this.startX = X;
         drag.x = drag.y = 10;
         setSize(15,32);
         offset.set(10,0);
@@ -84,9 +92,56 @@ class Kid extends FlxSprite
                         this.state = "ducking";
                         animation.play("duck");});
                     this.state = "throwing";
+                }                
+            }
+        }
+    }
+
+    public function charge() {
+        if(this.canThrow) {
+            var targets = this.enemies.members.filter(function(e) {return e.state != "dead";});
+            
+            if(targets.length > 0) {
+                var target = targets[Std.random(targets.length)];
+                if(this.state != "throwing") {
+                    new FlxTimer(Std.random(2),function(_) {
+                        if(this.state == "dead") { return;}
+                        animation.play("throw");
+                        throwSnowball(target,.5);});
+                    new FlxTimer(2,function(_) {
+                        if(this.state == "dead") { return;}
+                        this.state = "running";
+                        animation.play("running");});
+                    this.state = "throwing";
                 }
                 
             }
+        } else {
+            this.state = "running";
+            animation.play("running");
+            if(movementTarget == null || movementTarget.state == "dead") {
+                var targets = this.enemies.members.filter(function(e) {return e.state != "dead";});            
+                this.movementTarget = Misc.randomFrom(targets);            
+            }    
+            FlxVelocity.moveTowardsObject(this,this.movementTarget,50);    
+        }
+    }
+
+    public function spawn() {
+        if(this.x < this.startX - 48) {
+            this.state = "standing";
+            animation.play("standing");
+            this.velocity.x = 0;
+            this.velocity.y = 0;
+            this.brain = attack;
+        } else {
+            this.state = "running";
+            animation.play("running");
+            if(movementTarget == null || movementTarget.state == "dead") {
+                var targets = this.enemies.members.filter(function(e) {return e.state != "dead";});            
+                this.movementTarget = Misc.randomFrom(targets);            
+            }    
+            FlxVelocity.moveTowardsPoint(this,FlxPoint.weak(this.startX - 50,this.startY),50);   
         }
     }
 

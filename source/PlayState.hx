@@ -22,7 +22,7 @@ import openfl.Assets;
 using flixel.util.FlxSpriteUtil;
 using Misc;
 
-
+typedef Wave = {numEnemies: Int, setup: Kid->Void, numWaves:Int,waveDelay:Int}
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -41,12 +41,18 @@ class PlayState extends FlxState
 	public var enemySnowballs:FlxTypedGroup<Snowball>;
 	public var emitters:FlxTypedGroup<FlxEmitter>;
 	public var canThrow:Bool;
+	public var enemyPool:FlxTypedGroup<Kid>;
+
+	public var currentWave:Int;
+	public var remainingWaves:Int;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	override public function create():Void
 	{
+		currentWave = 0;
+		remainingWaves = -1;
 		map = new FlxTilemap();
 		map.loadMap(Assets.getText("assets/data/Map1.txt"),AssetPaths.tiles__png,32,32);
 
@@ -55,9 +61,7 @@ class PlayState extends FlxState
 		FlxG.worldBounds.width = map.width;
 		FlxG.worldBounds.height = map.height;
 
-		add(map);
-
-		
+		add(map);		
 
 		enemies = new FlxTypedGroup<Kid>();
 		add(enemies);
@@ -74,12 +78,7 @@ class PlayState extends FlxState
 		emitters = new FlxTypedGroup<FlxEmitter>();
 		add(emitters);
 
-		for (x in 1...6) {
-			enemy = new Kid(255 + Std.random(15),x * 40,true,friendlies,enemySnowballs);			
-			enemy.brain = enemy.attack;
-			enemy.randomThrowDelay = true;
-			enemies.add(enemy);
-		}
+		makeWaveHappen();
 
 		for (x in 1...5) {
 			friendly = new Kid(15 + Std.random(15),x * 40,false,enemies,snowballs);			
@@ -89,6 +88,7 @@ class PlayState extends FlxState
 		}
 
 		player = new Player(15,200,enemies,snowballs);
+		player.brain = null;
 		friendlies.add(player);
 		canThrow = true;
 
@@ -108,17 +108,43 @@ class PlayState extends FlxState
 		super.destroy();
 	}
 
+	public function makeWaveHappen() {
+		var waves:Array<Wave> = 
+			[{numEnemies:5,setup:function(k:Kid) {k.brain = k.spawn;},numWaves:3,waveDelay:8},
+			 {numEnemies:5,setup:function(k:Kid) {k.brain = k.charge;},numWaves:3,waveDelay:14}];
+		var wave = waves[this.currentWave];
+		
+		switch(this.remainingWaves) {
+			case -1: this.remainingWaves = wave.numWaves;
+			case 0: 
+				this.currentWave += 1;
+				this.remainingWaves = -1;
+				makeWaveHappen();
+				return;
+		}
+
+		for (i in 0...wave.numEnemies) {
+			enemy = new Kid(255 + Std.random(15),i * 40,true,friendlies,enemySnowballs);
+			wave.setup(enemy);
+			enemy.randomThrowDelay = true;
+			enemies.add(enemy);
+		}
+
+		this.remainingWaves -= 1;
+		new FlxTimer(wave.waveDelay,function(_) { this.makeWaveHappen();});
+	}
+
 	public function animFallBack(sprite:FlxSprite,callback = null) {
 		var xMod = (sprite.facing == FlxObject.RIGHT) ? -1 : 1;
 		var bounceDistance = Std.random(32) * xMod;
 		FlxTween.tween(sprite,{x:sprite.x + bounceDistance},.05);
-		FlxTween.angle(sprite,0,90 * xMod,.05,{ease:FlxEase.bounceOut,complete:callback});
+		FlxTween.angle(sprite,0,90 * xMod,.07,{ease:FlxEase.bounceOut,complete:callback});
 	}
 
 	public function animBounce(sprite:FlxSprite,callback = null) {
 		var xMod = (sprite.facing == FlxObject.RIGHT) ? -1 : 1;
 		var bounceHeight = Std.random(15) * xMod;
-		FlxTween.tween(sprite,{y:sprite.y - bounceHeight},
+		FlxTween.tween(sprite,{x:sprite.x + bounceHeight,y:sprite.y - bounceHeight},
 			.05,{complete: function(_) {
 					FlxTween.tween(sprite,{y:sprite.y + bounceHeight},
 					.05,{complete:callback});
@@ -131,17 +157,18 @@ class PlayState extends FlxState
 		FlxTween.angle(sprite,0,-90 * xMod,.5,{ease:FlxEase.elasticIn,complete:callback});
 	}
 
-	public function enemyHit(enemy:Kid,snowball:Snowball) {
+	public function enemyHit(enemy:Kid,snowball:Snowball) {		
 		
-		snowball.destroy();	
-		if(enemy.state == "duck" || enemy.state == "ducking") {
+		if(enemy.state == "duck" || enemy.state == "ducking" || enemy.state == "dead") {
 			return;
-		}
+		} 
+		snowball.destroy();
 		FlxG.sound.play(AssetPaths.snowHit__mp3);
 		if (enemy.state != "dead") {
 			var deathChoices = [animFallBack];
 			var deathChoice = deathChoices[Std.random(deathChoices.length)];
-			var dieFunc = function(_) { enemy.state = "dead";}
+			var dieFunc = function(_) { enemy.state = "dead";enemy.animation.play("standing");enemy.velocity.x = 0; enemy.velocity.y = 0;}
+			enemy.animation.play("standing");
 			deathChoice(enemy,dieFunc);					
 		} else {
 			animBounce(enemy);
@@ -157,7 +184,6 @@ class PlayState extends FlxState
 
 		FlxG.overlap(this.enemies, this.snowballs, enemyHit);
 		FlxG.overlap(this.friendlies, this.enemySnowballs, enemyHit);
-
 
 		if (FlxG.mouse.justPressedRight) {
 			switch(player.state) {				

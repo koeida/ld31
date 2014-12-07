@@ -10,6 +10,7 @@ using StringTools;
 enum SnowballType {Slow;Fast;}
 
 class Misc {
+    public static var outfitPool:Array<FlxSprite> = new Array();
 	public static function assetsWithName(n) {
         return Assets
             .list(IMAGE)
@@ -24,7 +25,7 @@ class Misc {
 
     public static function randomSpriteWithName(s,faceLeft) {
         var sprite = new FlxSprite();
-        sprite.loadGraphic(Misc.randomAssetWithName(s),true,32,32,true);
+        sprite.loadGraphic(Misc.randomAssetWithName(s),true,32,32,false);
         sprite.setFacingFlip(FlxObject.LEFT, true, false);
         sprite.setFacingFlip(FlxObject.RIGHT, false, false);
         sprite.facing = faceLeft ? FlxObject.LEFT : FlxObject.RIGHT;
@@ -32,14 +33,8 @@ class Misc {
     }
 
     public static function replaceColor(sprite:FlxSprite,oldColor,newColor) {
-        var colors = new Array<String>();
         for(cx in 0...sprite.pixels.width) {
             for (cy in 0...sprite.pixels.height) {
-                var color = StringTools.hex(sprite.pixels.getPixel(cx,cy),6);
-                if (colors.indexOf(color) == -1) {
-                    colors.push(color);
-                }
-                
                 if(sprite.pixels.getPixel(cx,cy) == oldColor) {
                     sprite.pixels.setPixel(cx,cy,newColor);
                 }
