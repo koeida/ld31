@@ -10,10 +10,12 @@ using StringTools;
 class Enemy extends FlxSprite
 {
     public var speed:Float = 140;
+    public var state:String;
 
     public function new(X:Float=0, Y:Float=0) 
     {
         super(X, Y);
+        state = "alive";
         Misc.generateSprite(this);
 
         setFacingFlip(FlxObject.LEFT, true, false);

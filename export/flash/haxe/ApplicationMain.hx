@@ -199,11 +199,19 @@ class ApplicationMain {
 		types.push (AssetType.MUSIC);
 		
 		
+		urls.push ("assets/sounds/snowmiss.mp3");
+		types.push (AssetType.MUSIC);
+		
+		
 		urls.push ("assets/sounds/sounds-go-here.txt");
 		types.push (AssetType.TEXT);
 		
 		
 		urls.push ("assets/sounds/throw.mp3");
+		types.push (AssetType.MUSIC);
+		
+		
+		urls.push ("assets/sounds/throwhigh.mp3");
 		types.push (AssetType.MUSIC);
 		
 		

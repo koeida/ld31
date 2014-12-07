@@ -21,29 +21,31 @@ class Snowball extends FlxSprite {
         super(X, Y);
 
         //LAUNCH SNOWBALL
-        this.loadRotatedGraphic(AssetPaths.snowball__png,16);
+        this.loadRotatedGraphic(AssetPaths.snowball__png,5);
         this.scale.x = .5;
         this.scale.y = .5;
-        this.animation.add("spin", [for (x in 0...16) x], 128, true);
+        this.animation.add("spin", [for (x in 0...5) x], 30, true);
 
         var missAmountX = FlxRandom.intRanged(-missRadius,missRadius);
         var missAmountY = (snowballType == Fast) ? FlxRandom.intRanged(-missRadius,missRadius) : 0;
-    	var targX = targetX + 50 + missAmountX;
-    	var targY = targetY + 50 + missAmountY;
+    	var targX = targetX + 100 + missAmountX;
+    	var targY = targetY + 100 + missAmountY;
 
         switch(snowballType) {
-        	case Slow: 
+        	case Slow:
+        		FlxG.sound.play(AssetPaths.throwhigh__mp3);
         		FlxTween.quadMotion(this,X,Y,
 					Std.int((X + targetX - 100) / 2), targetY - 200,
 					targX, targY,
 					1,true,{complete: function(_) {this.destroy();}});
         	case Fast:
+        		FlxG.sound.play(AssetPaths.throw__mp3);
         		FlxTween.tween(this, {x:targX,y:targY},.25,
         			{complete: function(_) {this.destroy();}});
         }
         
         //INIT PARTICLE EMITTER
-        emitter = new FlxEmitter(this.x,this.y, 100);
+        emitter = new FlxEmitter(this.x,this.y, 20);
 		emitter.setXSpeed(20,50);
 		emitter.setYSpeed(100,200);
 		emitter.bounce = 0;
@@ -63,7 +65,7 @@ class Snowball extends FlxSprite {
 			whitePixel.lifespan = .1;
 			emitter.add(whitePixel);
 		}
-		emitter.start(false, 2, .01);
+		emitter.start(false, 2, .05);
     }
 
     override public function destroy():Void {

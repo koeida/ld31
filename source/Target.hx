@@ -12,7 +12,7 @@ class Target extends FlxSprite {
     {
         super(X, Y);
         tweens = new Array<FlxTween>();
-        makeGraphic(100, 100, FlxColor.TRANSPARENT);
+        makeGraphic(200, 200, FlxColor.TRANSPARENT);
 		drawCircle(-1,-1,-1,FlxColor.RED);
 		this.alpha = 0.25;
     }
@@ -27,8 +27,8 @@ class Target extends FlxSprite {
 	 */
 	override public function update():Void
 	{	
-		this.x = FlxG.mouse.x - 50;
-		this.y = FlxG.mouse.y - 50;
+		this.x = FlxG.mouse.x - Std.int(this.width / 2);
+		this.y = FlxG.mouse.y - Std.int(this.height / 2);
 		super.update();
 	}	
 }
