@@ -17,7 +17,7 @@ class Snowball extends FlxSprite {
 	public var emitter:FlxEmitter;
 	private var whitePixel:FlxParticle;
 
-    public function new(X:Float=0, Y:Float=0,targetX:Float,targetY:Float,snowballType:SnowballType,missRadius) {
+    public function new(X:Float=0, Y:Float=0,targetX:Float,targetY:Float,snowballType:SnowballType,missRadius,missOffset) {
         super(X, Y);
 
         //LAUNCH SNOWBALL
@@ -28,8 +28,8 @@ class Snowball extends FlxSprite {
 
         var missAmountX = FlxRandom.intRanged(-missRadius,missRadius);
         var missAmountY = (snowballType == Fast) ? FlxRandom.intRanged(-missRadius,missRadius) : 0;
-    	var targX = targetX + 100 + missAmountX;
-    	var targY = targetY + 100 + missAmountY;
+    	var targX = targetX + missOffset + missAmountX;
+    	var targY = targetY + missOffset + missAmountY;
 
         switch(snowballType) {
         	case Slow:

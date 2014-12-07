@@ -43,22 +43,6 @@ class ApplicationMain {
 		types.push (AssetType.IMAGE);
 		
 		
-		urls.push ("assets/images/bases/kid_base1.png");
-		types.push (AssetType.IMAGE);
-		
-		
-		urls.push ("assets/images/bases/kid_base2.png");
-		types.push (AssetType.IMAGE);
-		
-		
-		urls.push ("assets/images/bases/kid_base3.png");
-		types.push (AssetType.IMAGE);
-		
-		
-		urls.push ("assets/images/bases/kid_base4.png");
-		types.push (AssetType.IMAGE);
-		
-		
 		urls.push ("assets/images/hats/hats1.png");
 		types.push (AssetType.IMAGE);
 		
@@ -69,22 +53,6 @@ class ApplicationMain {
 		
 		urls.push ("assets/images/images-go-here.txt");
 		types.push (AssetType.TEXT);
-		
-		
-		urls.push ("assets/images/outfits/outfit_blue.png");
-		types.push (AssetType.IMAGE);
-		
-		
-		urls.push ("assets/images/outfits/outfit_grey.png");
-		types.push (AssetType.IMAGE);
-		
-		
-		urls.push ("assets/images/outfits/outfit_pink.png");
-		types.push (AssetType.IMAGE);
-		
-		
-		urls.push ("assets/images/outfits/outfit_purple.png");
-		types.push (AssetType.IMAGE);
 		
 		
 		urls.push ("assets/images/outfits/outfit_red.png");
@@ -152,6 +120,18 @@ class ApplicationMain {
 		
 		
 		urls.push ("assets/images/tiles11.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles12.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles13.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles14.png");
 		types.push (AssetType.IMAGE);
 		
 		

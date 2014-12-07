@@ -6,26 +6,11 @@ import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 using flixel.util.FlxSpriteUtil;
 
-class Player extends FlxSprite
+class Player extends Kid
 {
-	public var speed = 200.0;
-	public var state = "ducking";
-
-    public function new(X:Float=0, Y:Float=0) 
+    public function new(X:Float=0, Y:Float=0,enemies,snowballs) 
     {
-        super(X, Y);
-        Misc.generateSprite(this);
-
-		animation.add("duck", [0, 1], 6, false);
-		animation.add("stand", [1,0], 6, false);
-		animation.add("ducking", [1], 6, false);
-		animation.add("standing", [0], 6, false);
-		animation.add("throw",[2,3,4,5,6,7],40,false);
-
-
-        drag.x = drag.y = 1600;
-        setSize(8,14);
-        offset.set(4,2);
+        super(X, Y,false,enemies,snowballs,false);
     }
     private function movement():Void {
 
@@ -50,8 +35,7 @@ class Player extends FlxSprite
 		if(FlxG.mouse.justPressed) {
 			switch(this.state) {
 				case "standing":
-					this.state = "throwing";
-					animation.play("throw");				
+					this.state = "aimstart";			
 			}
 		}
 
