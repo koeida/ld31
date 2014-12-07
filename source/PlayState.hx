@@ -17,6 +17,7 @@ import flixel.util.FlxRect;
 import openfl.Assets;
 
 using flixel.util.FlxSpriteUtil;
+using Misc;
 
 
 
@@ -48,11 +49,13 @@ class PlayState extends FlxState
 
 		add(map);
 
-		player = new Player(0, 100);
+		player = new Player(25, 100);
 		add(player);
 
-		enemy = new Enemy(300,100);
-		add(enemy);
+		for (x in 1...6) {
+			enemy = new Enemy(285 + Std.random(15),x * 40);
+			add(enemy);
+		}
 
 		target = new Target(0,0);
 		target.visible = false;
@@ -105,10 +108,14 @@ class PlayState extends FlxState
 		if (FlxG.mouse.justPressed) {
 			switch(player.state) {
 				case "throwing":
+					var snowballType = this.target.scale.x <= .4 ? Fast : Slow;
+					var accuracyMod = Std.int(100 * this.target.scale.x);
 					var snowBall = new Snowball(this.player.x,this.player.y,
-												this.target.x,this.target.y);
+												this.target.x,this.target.y,
+												snowballType,accuracyMod);
 					add(snowBall);
 					add(snowBall.emitter);
+					FlxG.sound.play(AssetPaths.throw__mp3);
 			}
 		}
 	}	

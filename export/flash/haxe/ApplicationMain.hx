@@ -99,6 +99,90 @@ class ApplicationMain {
 		types.push (AssetType.IMAGE);
 		
 		
+		urls.push ("assets/images/tiles0.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles00.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles01.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles02.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles03.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles04.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles05.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles06.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles07.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles08.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles09.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles1.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles10.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles11.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles2.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles3.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles4.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles5.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles6.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles7.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/tiles8.png");
+		types.push (AssetType.IMAGE);
+		
+		
 		urls.push ("assets/images/tile_snow.png");
 		types.push (AssetType.IMAGE);
 		
@@ -107,8 +191,20 @@ class ApplicationMain {
 		types.push (AssetType.TEXT);
 		
 		
+		urls.push ("assets/sounds/lasthit.mp3");
+		types.push (AssetType.MUSIC);
+		
+		
+		urls.push ("assets/sounds/snowHit.mp3");
+		types.push (AssetType.MUSIC);
+		
+		
 		urls.push ("assets/sounds/sounds-go-here.txt");
 		types.push (AssetType.TEXT);
+		
+		
+		urls.push ("assets/sounds/throw.mp3");
+		types.push (AssetType.MUSIC);
 		
 		
 		urls.push ("assets/sounds/beep.mp3");

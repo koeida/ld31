@@ -7,6 +7,8 @@ import flixel.FlxSprite;
 using Lambda;
 using StringTools;
 
+enum SnowballType {Slow;Fast;}
+
 class Misc {
 	public static function assetsWithName(n) {
         return Assets
