@@ -7,6 +7,8 @@ import flixel.group.FlxTypedGroup;
 import flixel.util.FlxPoint;
 import flixel.util.FlxTimer;
 import flixel.util.FlxVelocity;
+import flixel.util.FlxMath;
+import flixel.addons.effects.FlxWaveSprite;
 
 using Lambda;
 using Misc;
@@ -29,7 +31,8 @@ class Kid extends FlxSprite
     public var ableToRecover:Bool = false;
     public var isFlagKid:Bool = false;
     public var flagName:String;
-    public var flag:FlxSprite;
+    public var flags:FlxSprite;
+    public var flag:FlxWaveSprite;
     public var flagpole:FlxSprite;
 
     public function new(X:Float=0, Y:Float=0,faceLeft = false,enemies,snowballs,throwDelay = true) 
@@ -62,11 +65,18 @@ class Kid extends FlxSprite
             var throwDelay = this.randomThrowDelay ? 1 + Std.random(2) : 1;
             new FlxTimer(throwDelay,function(_) { this.canThrow = true;});
         }
+
+        if(this.isFlagKid) {
+            flag.center = Std.int(FlxMath.bound(flag.center, 0, flag.height));
+            flag.strength = Std.int(FlxMath.bound(flag.strength, 0, 500));
+            flag.speed = FlxMath.bound(flag.speed, 0, 80);
+            flag.mode = TOP;
+        }
     }
 
-    public function throwSnowball(target:FlxSprite,accuracy) {
+     public function throwSnowball(target:FlxSprite,accuracy) {
         this.canThrow = false;
-        var throwDelay = this.randomThrowDelay ? 1 + Std.random(3) : 1;
+        var throwDelay = this.randomThrowDelay ? 1 + Std.random(2) : 1;
         new FlxTimer(throwDelay,function(_) { this.canThrow = true;});
         var snowballType = accuracy <= .4 ? Fast : Slow;
         var accuracyMod = Std.int(50 * target.scale.x);
@@ -81,7 +91,7 @@ class Kid extends FlxSprite
         if(this.isFlagKid) {
             this.flagpole.x = this.x - 5;
             this.flagpole.y = this.y - 40;
-            this.flag.x = this.flagpole.x;
+            this.flag.x = this.flagpole.x - 24;
             this.flag.y = this.flagpole.y;
         }
         if(this.brain != null && this.state != "dead") {

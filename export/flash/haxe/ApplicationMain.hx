@@ -39,10 +39,6 @@ class ApplicationMain {
 		types.push (AssetType.IMAGE);
 		
 		
-		urls.push ("assets/images/accessories/flagpole.png");
-		types.push (AssetType.IMAGE);
-		
-		
 		urls.push ("assets/images/accessories/flag_american.png");
 		types.push (AssetType.IMAGE);
 		
@@ -55,11 +51,19 @@ class ApplicationMain {
 		types.push (AssetType.IMAGE);
 		
 		
+		urls.push ("assets/images/accessories/flag_gay.png");
+		types.push (AssetType.IMAGE);
+		
+		
 		urls.push ("assets/images/accessories/flag_isis..png");
 		types.push (AssetType.IMAGE);
 		
 		
 		urls.push ("assets/images/accessories/flag_isis.png");
+		types.push (AssetType.IMAGE);
+		
+		
+		urls.push ("assets/images/accessories/pole.png");
 		types.push (AssetType.IMAGE);
 		
 		
@@ -195,11 +199,19 @@ class ApplicationMain {
 		types.push (AssetType.IMAGE);
 		
 		
+		urls.push ("assets/images/title.png");
+		types.push (AssetType.IMAGE);
+		
+		
 		urls.push ("assets/music/music-goes-here.txt");
 		types.push (AssetType.TEXT);
 		
 		
 		urls.push ("assets/sounds/block.mp3");
+		types.push (AssetType.MUSIC);
+		
+		
+		urls.push ("assets/sounds/ingame.mp3");
 		types.push (AssetType.MUSIC);
 		
 		

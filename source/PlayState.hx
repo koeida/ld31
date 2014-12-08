@@ -1,5 +1,6 @@
 package;
 
+import flixel.addons.effects.FlxWaveSprite;
 import flixel.effects.particles.FlxEmitter; 
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -45,8 +46,10 @@ class PlayState extends FlxState
 
 	public var currentWave:Int;
 	public var remainingWaves:Int;
-	public var flag:FlxSprite;
+	public var flags:FlxSprite;
+	public var flag:FlxWaveSprite;
 	public var flagPole:FlxSprite;
+	public var flagAsset:String;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -62,6 +65,8 @@ class PlayState extends FlxState
 		FlxG.worldBounds.y = 0;
 		FlxG.worldBounds.width = map.width;
 		FlxG.worldBounds.height = map.height;
+
+		this.flagAsset = Misc.randomAssetWithName("flag");
 
 		add(map);		
 
@@ -101,7 +106,6 @@ class PlayState extends FlxState
 		target = new Target(0,0);
 		target.visible = false;
 		add(target);
-
 		super.create();
 	}	
 	
@@ -116,14 +120,20 @@ class PlayState extends FlxState
 
 	public function makeWaveHappen() {
 		var waves:Array<Wave> = 
-			[{numEnemies:6,setup:function(k:Kid) {k.brain = k.charge;k.isFlagKid = Std.random(4) == 3 ? true : false;k.flagName="anarchist";},numWaves:3,waveDelay:14},
-			 {numEnemies:6,setup:function(k:Kid) {k.brain = k.spawn;},numWaves:3,waveDelay:8}];
+			[{numEnemies:5,setup:function(k:Kid) {k.brain = k.charge;k.isFlagKid = Std.random(7) == 3 ? true : false;k.flagName="anarchist";},numWaves:3,waveDelay:10},
+			 {numEnemies:5,setup:function(k:Kid) {k.brain = k.spawn;},numWaves:3,waveDelay:8},
+			 {numEnemies:5,setup:function(k:Kid) {
+			 	k.brain = (Std.random(10) < 5) ? k.charge : k.spawn;
+			 },numWaves:3,waveDelay:10}];
 		var wave = waves[this.currentWave];
 		
 		switch(this.remainingWaves) {
 			case -1: this.remainingWaves = wave.numWaves;
 			case 0: 
 				this.currentWave += 1;
+				if(this.currentWave >= waves.length) {
+					this.currentWave = 0;
+				}
 				this.remainingWaves = -1;
 				makeWaveHappen();
 				return;
@@ -133,18 +143,23 @@ class PlayState extends FlxState
 			enemy = new Kid(255 + Std.random(15),Std.random(200),true,friendlies,enemySnowballs);
 			wave.setup(enemy);
 			if(enemy.isFlagKid) {
-				enemy.flag = new FlxSprite();
+				enemy.flags = new FlxSprite();
 				enemy.flagpole = new FlxSprite();
 
-				var flagAsset = Misc.assetsWithName(enemy.flagName)[0];
-				enemy.flag.loadGraphic(flagAsset,true,64,64,false);
-				enemy.flagpole.loadGraphic(AssetPaths.flagpole__png,true,64,64,false);
+				
+				enemy.flags.loadGraphic(flagAsset,true,64,64,false);
+				enemy.flagpole.loadGraphic(AssetPaths.pole__png,true,64,64,false);
 				enemy.flagpole.setFacingFlip(FlxObject.LEFT, true, false);
-				enemy.flag.setFacingFlip(FlxObject.LEFT, true, false);
+				enemy.flags.setFacingFlip(FlxObject.LEFT, true, false);
+				enemy.flags.facing = FlxObject.LEFT;				
 				enemy.flagpole.facing = FlxObject.LEFT;				
+				enemy.flag = new FlxWaveSprite(enemy.flags);
+				enemy.flag.setFacingFlip(FlxObject.LEFT, true, false);
 				enemy.flag.facing = FlxObject.LEFT;
-				add(enemy.flag);
+				
 				add(enemy.flagpole);
+				add(enemy.flag);
+				
 			}
 			enemy.randomThrowDelay = true;
 			enemies.add(enemy);
@@ -188,7 +203,7 @@ class PlayState extends FlxState
 				new FlxTimer(30,function(_) { 
 					friend.animation.play("duck");
 					friend.state = "ducking";
-
+					FlxTween.angle(friend,-90,0,1);
 				});
 			}
 		}
@@ -201,9 +216,10 @@ class PlayState extends FlxState
 		kid.animation.play("standing");
 		deathChoice(kid,dieFunc);
 		if(kid.ableToRecover) {
-			new FlxTimer(30,function(_) { 
+			new FlxTimer(10,function(_) { 
 				kid.animation.play("duck");
 				kid.state = "ducking";
+				FlxTween.angle(kid,-90,0,1);
 			});
 		}
 	}
@@ -257,7 +273,7 @@ class PlayState extends FlxState
 				case "aiming" if (this.canThrow):
 					player.animation.play("throw");
 					this.canThrow = false;
-					new FlxTimer(1,function(_) { this.canThrow = true;});
+					new FlxTimer(.5,function(_) { this.canThrow = true;});
 					var snowballType = this.target.scale.x <= .4 ? Fast : Slow;
 					var accuracyMod = Std.int(50 * this.target.scale.x);
 					var snowBall = new Snowball(this.player.x,this.player.y,
